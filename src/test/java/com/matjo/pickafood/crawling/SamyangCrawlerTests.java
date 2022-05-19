@@ -43,12 +43,13 @@ public class SamyangCrawlerTests {
 
   }
 
-  @Test
-  public void testFoodService() {
-    FoodDTO food = new FoodDTO();
-    food.setCompany("삼양");
-    food.setIngredient("튀긴면, 라면스프");
-    food.setName("삼양라면");
-    foodService.insert(food);
-  }
+//  @Test
+//  public void testFoodService() {
+//    FoodDTO food = new FoodDTO();
+//    food.setCompany("삼양");
+//    food.setIngredient("튀긴면, 라면스프");
+//    food.setName("삼양라면");
+//    foodService.insert(food);
+//  }
+
 }
