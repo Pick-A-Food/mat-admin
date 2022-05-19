@@ -7,10 +7,10 @@
 
   <insert id="insert">
     insert into school (
-                        schoolCode,
-                        regionCode,
-                        schoolName,
-                        regionName,
+                        school_code,
+                        region_code,
+                        school_name,
+                        region_name,
                         address)
     values (
             #{schoolCode},
@@ -27,6 +27,6 @@
   </select>
 
   <select id="selectRegion" resultType="com.matjo.pickafood.admin.meal.domain.SchoolVO">
-    select * from school where regionCode = #{regionCode}
+    select * from school where region_code = #{regionCode}
   </select>
 </mapper>
