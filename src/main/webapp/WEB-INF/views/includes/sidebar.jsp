@@ -3,7 +3,7 @@
 <aside class="main-sidebar sidebar-light-primary elevation-4">
   
   <a href="/" class="brand-link logo-switch">
-    <img src="http://106.241.252.54:8085/img/icon/icon_thumbnail.png" alt="AdminLTE Logo" class="brand-image-xl" style="left:12px">
+    <img src="http://106.241.252.54:8085/img/icon/pickafood.png" alt="AdminLTE Logo" class="brand-image-xl" style="left:12px">
     <span class="brand-text font-weight-light">Pick <sup>A</sup> Food</span>
   </a>
   
@@ -79,21 +79,18 @@
 
           <%-- 급식 --%>
           <li class="nav-item">
-            <a class="nav-link">
-              <i class="nav-icon fas fa-apple-alt"></i>
-              <i class="fa-solid fa-plate-utensils"></i>
-              <p> 급식 관리
-                <i class="fas fa-angle-left right"></i>
-              </p>
+             <a href="/meal/school" class="nav-link">
+                <i class="nav-icon fas fa-apple-alt"></i>
+                <p>급식 관리</p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/meal/school" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>자유 게시판</p>
-                </a>
-              </li>
-            </ul>
+          </li>
+
+        <%-- 음식 재료 정보들 --%>
+          <li class="nav-item">
+            <a href="/food/list" class="nav-link">
+              <i class="nav-icon fas fa-apple-alt"></i>
+              <p>알러지 지식창고</p>
+            </a>
           </li>
       </ul>
     </nav>

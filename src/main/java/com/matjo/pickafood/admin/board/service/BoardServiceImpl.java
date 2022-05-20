@@ -48,9 +48,9 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public BoardDTO getOne(Integer board_seq) {
-        log.info("get....."+ board_seq);
-        BoardVO boardVO = boardMapper.selectOne(board_seq);
+    public BoardDTO getOne(Integer boardSeq) {
+        log.info("get....."+ boardSeq);
+        BoardVO boardVO = boardMapper.selectOne(boardSeq);
         BoardDTO boardDTO = modelMapper.map(boardVO, BoardDTO.class);
         return boardDTO;
     }
@@ -59,22 +59,22 @@ public class BoardServiceImpl implements BoardService{
     public void update(BoardDTO boardDTO) {
 
         boardMapper.update(BoardVO.builder()
-                .board_seq(boardDTO.getBoard_seq())
+                .boardSeq(boardDTO.getBoardSeq())
                 .title(boardDTO.getTitle())
                 .content(boardDTO.getContent())
                 .build());
     }
 
     @Override
-    public void remove(Integer board_seq) {
+    public void remove(Integer boardSeq) {
 
-        boardMapper.delete(board_seq);
+        boardMapper.delete(boardSeq);
 
     }
 
     @Override
-    public List<UploadResultDTO> getFiles(Integer board_seq) {
-        List<AttachFile> attachFiles = boardMapper.selectFiles(board_seq);
+    public List<UploadResultDTO> getFiles(Integer boardSeq) {
+        List<AttachFile> attachFiles = boardMapper.selectFiles(boardSeq);
 
         return attachFiles.stream()
                 .map(attachFile -> modelMapper.map(attachFile, UploadResultDTO.class))

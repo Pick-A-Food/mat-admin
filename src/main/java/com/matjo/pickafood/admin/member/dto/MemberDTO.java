@@ -6,5 +6,5 @@ import lombok.Data;
 public class MemberDTO {
   private String id;
   private String pw;
-  private String nickName;
+  private String nickname;
 }

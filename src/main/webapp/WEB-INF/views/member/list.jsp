@@ -21,7 +21,7 @@
       <tr>
         <th scope="row">${member.id}</th>
         <td class="dateType">${member.pw}</td>
-        <td style="text-align: left; background-color:#f2f7f4;">${member.nickName}</td>
+        <td style="text-align: left; background-color:#f2f7f4;">${member.nickname}</td>
       </tr>
     </c:forEach>
     </tbody>

@@ -26,7 +26,7 @@ public class LogAdvice {
     //          스프링은 자동으로 프록시하기 때문에 AutoProxy
     // 포인트라는 문법. 문자열로 만들다 보니 제대로 적용 되었는 지 알 수 없다...
                 // ↓ 포인트 것을 지정하는 aspectj 의 표기법 ReplyService 의 모든 메소드에 이걸 걸겠다.
-    @Before("execution(* org.zerock.sp1.service.ReplyService*.*(..))")
+    @Before("execution(* com.matjo.pickafood.admin.*.service.*(..))")
     public void printLog(JoinPoint joinPoint){  //만약 여기부터 * 로 하면 service 밑에 있는 모든 것으로 적용 가능
                         //JoinPoint 가 바로 그 메소드
 

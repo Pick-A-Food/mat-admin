@@ -1,4 +1,4 @@
-package com.matjo.pickafood.admin.sample;
+package mapper.board.admin.sample;
 
 
 import lombok.extern.log4j.Log4j2;

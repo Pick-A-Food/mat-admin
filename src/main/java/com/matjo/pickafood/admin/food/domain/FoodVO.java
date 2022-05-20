@@ -9,12 +9,15 @@ import lombok.*;
 @NoArgsConstructor
 public class FoodVO {
 
-  private Integer food_seq;
-  private String name;
-  private String companyCategory;
-  private String company;
-  private String mainImage;
-  private String ingredient;
-  private String sameFactory;
+    private Integer foodSeq; //pk
+    private String name; //이름
+    private String companyCategory;
+    private String company; //회사
+    private String mainImage; //이미지
+    private String ingredient; //재료 성분
+    private String sameFactory; //같은 공장
+
+    private String image2;
+    private String image3;
 
 }

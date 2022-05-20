@@ -46,9 +46,9 @@
                         </div>
                     </c:if>
                     <c:if test="${dto.answerFlag == 0}">
-                        <form action="/inquiry/read/${dto.inquiry_seq}" method="post" >
+                        <form action="/inquiry/read/${dto.inquirySeq}" method="post" >
 
-                            <input type="hidden" name="inquiry_seq" value="${dto.inquiry_seq}">
+                            <input type="hidden" name="inquirySeq" value="${dto.inquirySeq}">
                             <textarea class="form-control" rows="2" placeholder="답변 달기" name="answerContent"></textarea>
                             <div align="right" style="padding-top: 5px">
                                 <a class="badge bg-secondary text-decoration-none link-light">

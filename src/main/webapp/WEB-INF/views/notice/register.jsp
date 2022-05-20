@@ -38,7 +38,7 @@
                             <label for="inputName" style="width: 7vw; ">제 목</label>
                             <input type="text" id="inputName" name="title" class="form-control inputName" style="margin-right: 5vw">
                             <label for="inputName" style="width: 10vw;">닉네임</label>
-                            <input type="text" class="form-control inputId" name="nickName" placeholder="로그인 하면 자동으로 들어갈 곳" >
+                            <input type="text" class="form-control inputId" name="nickname" placeholder="로그인 하면 자동으로 들어갈 곳" >
                             <input type="hidden" name="id" value="member123">
                         </div>
                         <div class="hiddenClass"></div>
@@ -48,29 +48,38 @@
                         </div>
                     </div>
                     </form>
+
                     <div class="card-header">
                         <h3 class="card-title" style="list-style: none">첨부파일</h3>
                     </div>
                     <div class="card-body" style="display: block;">
                         <div class="uploadInputDiv">
                             <input type="file" name="upload" multiple class="uploadFile">
-                            <button class="btn bg-gradient-info float-right file-add uploadBtn">파일 추가</button>
+                            <button class="btn bg-gradient-info float-right file-add uploadBtn">업로드</button>
                         </div>
                     </div>
                     <style>
                         .uploadResult{
                             display: flex;
+                            padding-left: 20px;
+                            padding-bottom: 10px;
                         }
 
                         .uploadResult > div {
-                            margin:3vm;
+                            padding-right: 20px;
                             border-color: sienna;
+
                             /*   자동으로 줄 바꾸는 것 넣기 */
+                        }
+
+                        .uploadResult > div > span{
+                            font-size : 10px;
                         }
 
                         .delBtn{
                             cursor: pointer;
                             border-style: none;
+                            background-color: #ffffff;
                         }
                     </style>
 
@@ -90,109 +99,88 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
 
-const uploadResult = document.querySelector(".uploadResult")
+    const uploadResult = document.querySelector(".uploadResult")
+    const cloneInput = document.querySelector(".uploadFile").cloneNode()
 
-function loadImages(){
-    axios.get("/board/files/\${dto.bno}").then(
-        res => {
-            const resultArr = res.data
+    /* 등록 버튼 */
+    document.querySelector(".registerBtn").addEventListener("click", (e) => {
+        e.preventDefault()
+        e.stopPropagation()
 
-            uploadResult.innerHTML += resultArr.map(({uuid,thumbnail,link,fileName, savePath, img}) =>
-                `<div data-uuid="\${uuid}",data-filename="\${fileName}",
-                                        data-savepath="\${savePath}", data-img="\${img}"}>
-                                <img src='/view?fileName=\${thumbnail}'>
-                                <button data-link="\${link}" class="delBtn">X</button>
-                                \${fileName}</div>`).join("</div><div>")
+        /* 이미지 정보 */
+        const divArr = document.querySelectorAll(".uploadResult > div")
+        let str = "";
 
+        for(let i= 0;i < divArr.length; i++){
+            const fileObj = divArr[i]
+
+            if(i === 0){
+                const mainImageLink = fileObj.querySelector("img").getAttribute("src")
+                str += `<input type='hidden' name='mainImage' value='\${mainImageLink}'>`
+            }
+
+            const fileSeq = fileObj.getAttribute("data-fileSeq")
+            // const uuid = fileObj.getAttribute("data-uuid")
+            // const img = fileObj.getAttribute("data-img")
+            // const savePath = fileObj.getAttribute("data-savepath")
+            // const fileName = fileObj.getAttribute("data-filename")
+
+            str += `<input type='hidden' name='fileSeq' value='\${fileSeq}'>`
+            // str += `<input type='hidden' name='uploads[\${i}].uuid' value='\${uuid}'>`
+            // str += `<input type='hidden' name='uploads[\${i}].img' value='\${img}'>`
+            // str += `<input type='hidden' name='uploads[\${i}].savePath' value='\${savePath}'>`
+            // str += `<input type='hidden' name='uploads[\${i}].fileName' value='\${fileName}'>`
+        }//for
+
+        const actionForm =  document.querySelector(".actionForm")
+        document.querySelector(".hiddenClass").innerHTML += str
+
+       // actionForm.submit();
+    }, false)
+
+
+
+    /* 첨부파일 */
+    uploadResult.addEventListener("click", (e) => {
+        if(e.target.getAttribute("class").indexOf("delBtn") < 0){
+            return
         }
-    )
-}
-loadImages()
-
-const cloneInput = document.querySelector(".uploadFile").cloneNode()
-
-
-/* 등록 버튼 */
-document.querySelector(".registerBtn").addEventListener("click", (e) => {
-    e.preventDefault()
-    e.stopPropagation()
+        const btn = e.target
+        const link = btn.getAttribute("data-link")
+        deleteToServer(link).then(result => {
+            btn.closest("div").remove()
+        })
+    },false)
 
 
-    /* 이미지 정보 */
-    const divArr = document.querySelectorAll(".uploadResult > div")
-    let str = "";
+    document.querySelector(".uploadBtn").addEventListener("click",(e)=> {
 
-    for(let i= 0;i < divArr.length; i++){
-        const fileObj = divArr[i]
+        const formObj = new FormData();
+        const fileInput = document.querySelector(".uploadFile")
+        console.log("file", fileInput.files)
 
-        if(i === 0){
-            const mainImageLink = fileObj.querySelector("img").getAttribute("src")
-            str += `<input type='hidden' name='mainImage' value='\${mainImageLink}'>`
+        const files = fileInput.files
+
+        for (let i = 0; i < files.length; i++) {
+            formObj.append("files", files[i]);
         }
+      
+        //resultArr 은 uploadResultDTO
 
-        const uuid = fileObj.getAttribute("data-uuid")
-        const img = fileObj.getAttribute("data-img")
-        const savePath = fileObj.getAttribute("data-savepath")
-        const fileName = fileObj.getAttribute("data-filename")
+        uploadToServer(formObj).then(resultArr => {
+            uploadResult.innerHTML += resultArr.map( ({fileSeq ,uuid,thumbnail,link, fileName,savePath, img}) => `
+                <div data-fileSeq='\${fileSeq}' data-uuid='\${uuid}' data-img='\${img}'  data-filename='\${fileName}'  data-savepath='\${savePath}'>
+                <img src='/view?fileName=\${thumbnail}'><button data-link='\${link}' class="delBtn" >x</button>
+                <br><span>\${fileName}</span>
+                </div>`).join(" ")
 
-        str += `<input type='hidden' name='uploads[\${i}].uuid' value='\${uuid}'>`
-        str += `<input type='hidden' name='uploads[\${i}].img' value='\${img}'>`
-        str += `<input type='hidden' name='uploads[\${i}].savePath' value='\${savePath}'>`
-        str += `<input type='hidden' name='uploads[\${i}].fileName' value='\${fileName}'>`
-    }//for
+            fileInput.remove();
+            document.querySelector(".uploadInputDiv").appendChild(cloneInput).cloneNode()
+            //업로드 버튼을 눌렀을 때 그제서야 버튼을 찾기 때문에 이렇게 하는 게 가능
+            //업로드 버튼을 누르면 dom 이 복구된 상태에서 찾기 때문에 읽을 수 있다.
+        })
 
-    const actionForm =  document.querySelector(".actionForm")
-    document.querySelector(".hiddenClass").innerHTML += str
-
-    actionForm.submit();
-}, false)
-
-
-
-/* 첨부파일 */
-uploadResult.addEventListener("click", (e) => {
-
-    if(e.target.getAttribute("class").indexOf("delBtn") < 0){
-        return
-    }
-    const btn = e.target
-    const link = btn.getAttribute("data-link")
-
-    deleteToServer(link).then(result => {
-        btn.closest("div").remove()
-    })
-
-},false)
-
-
-document.querySelector(".uploadBtn").addEventListener("click",(e)=> {
-
-    const formObj = new FormData();
-    const fileInput = document.querySelector(".uploadFile")
-    console.log(fileInput.files)
-
-    const files = fileInput.files
-
-    for (let i = 0; i < files.length; i++) {
-        formObj.append("files", files[i]);
-        console.log(files[i]);
-    }
-    //resultArr 은 uploadResultDTO
-
-    uploadToServer(formObj).then(resultArr => {
-        uploadResult.innerHTML += resultArr.map( ({uuid,thumbnail,link, ileName,savePath, img}) => `
-                <div data-uuid='\${uuid}' data-img='\${img}'  data-filename='\${fileName}'  data-savepath='\${savePath}'>
-                <img src='/view?fileName=\${thumbnail}'>
-                <button data-link='\${link}' class="delBtn">x</button>
-                \${fileName}</div>`).join(" ")
-
-        fileInput.remove()
-        document.querySelector(".uploadInputDiv").appendChild(cloneInput).cloneNode()
-        //업로드 버튼을 눌렀을 때 그제서야 버튼을 찾기 때문에 이렇게 하는 게 가능
-        //업로드 버튼을 누르면 dom 이 복구된 상태에서 찾기 때문에 읽을 수 있다.
-    })
-
-},false)
+    },false)
 
     //업로드 된 이미지 삭제
     async function deleteToServer(fileName){
@@ -201,12 +189,10 @@ document.querySelector(".uploadBtn").addEventListener("click",(e)=> {
         const res = await axios.post("/delete", "fileName="+fileName, options )
 
         return res.data
-
     }
 
     //이미지 업로드
     async function uploadToServer (formObj) {
-
         const response = await axios({
             method: 'post',
             url: '/upload',

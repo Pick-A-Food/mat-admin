@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class InquiryDTO {
-    private Integer inquiry_seq; //문의번호
+    private Integer inquirySeq; //문의번호
     private String title; //제목
     private String content; //내용
     private String id; //사용자 아이디

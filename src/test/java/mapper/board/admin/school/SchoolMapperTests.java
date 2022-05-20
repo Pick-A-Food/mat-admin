@@ -1,4 +1,4 @@
-package com.matjo.pickafood.admin.school;
+package mapper.board.admin.school;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.matjo.pickafood.admin.meal.domain.SchoolVO;

@@ -25,30 +25,50 @@
         </if>
     </sql>
 
-
+    <!-- 목록 -->
     <select id="selectList" resultType="com.matjo.pickafood.admin.notice.domain.NoticeVO">
-        select board_seq, boardCategory, title, content, id, nickName,
-        (TIMESTAMPDIFF(second , regDate, now())/60) date,
-        date_format(regDate, '%Y년 %m월 %d일') regDate, date_format(updateDate, '%Y년 %m월 %d일') updateDate, replyCount, delFlag, likeCount, viewsCount, mainImage
-        from board where delFlag=0
+        SELECT board_seq,
+               board_category,
+               title,
+               content,
+               id,
+               nickname,
+               (TIMESTAMPDIFF(second , reg_date, now()) / 60) DATE,
+                date_format(reg_date, '%Y년 %m월 %d일') reg_date, date_format(update_date, '%Y년 %m월 %d일') update_date,
+                 reply_count, del_flag, like_count, views_count, main_image
+        FROM board
+        WHERE del_flag=0
+            AND board_category=30000
         <include refid="search"></include>
-        order by board_seq desc
-        limit #{skip},#{size}
+        ORDER BY reg_date DESC,
+                 board_seq DESC
+            limit #{skip}, #{size}
     </select>
 
+    <!-- 목록 수 -->
     <select id="getTotal" resultType="int">
         select count(board_seq)
-        from board where delFlag=0
+        from board where del_flag=0 and board_category=30000
         <include refid="search"></include>
     </select>
 
     <!-- 등록 -->
     <insert id="insert">
-    <selectKey resultType="int" keyProperty="board_seq" order="AFTER">
+    <selectKey resultType="int" keyProperty="boardSeq" order="AFTER">
         select last_insert_id()
     </selectKey>
-    insert into board (boardCategory, title, content, id, nickName)
-    values (30000, #{title},#{content}, #{id}, #{nickName})
-</insert>
+    insert into board (board_category, main_image, title, content, id, nickname)
+    values (30000, #{mainImage}, #{title},#{content}, #{id}, #{nickname})
+    </insert>
+
+    <!-- 상세 조회 -->
+    <select id="selectOne" resultType="com.matjo.pickafood.admin.notice.domain.NoticeVO">
+        select * from board where board_seq = #{boardSeq}
+    </select>
+
+    <!--댓글 추가 시 목록에 댓글 수 표시 변화-->
+    <update id="updateReplyCount">
+        update board set reply_count = reply_count + #{amount} where board_seq = #{boardSeq}
+    </update>
 
 </mapper>

@@ -5,8 +5,45 @@
 
 <mapper namespace="com.matjo.pickafood.admin.food.mapper.FoodMapper">
 
+    <!-- 검색 조건 -->
+    <sql id ="search">
+        <if test='type == "n"'>
+            and food_seq > 0
+        </if>
+        <if test="keyword != null">
+            and
+            <foreach collection="types" item="item" separator="or" open="(" close=")">
+                <if test='item == "t"'>
+                    title like concat('%', #{keyword}, '%')
+                </if>
+
+                <if test='item == "c"'>
+                    content like concat('%', #{keyword}, '%')
+                </if>
+                <if test='
+                    item == "w"'>
+                    writer like concat('%', #{keyword}, '%')
+                </if>
+            </foreach>
+        </if>
+    </sql>
+
+
+    <select id="selectList" resultType="com.matjo.pickafood.admin.food.domain.FoodVO">
+        select *
+        from food where food_seq > 0
+        <include refid="search"></include>
+        order by food_seq desc
+        limit #{skip},#{size}
+    </select>
+
+    <select id="getTotal" resultType="int">
+        select count(food_seq)
+        from food where food_seq > 0
+        <include refid="search"></include>
+    </select>
   <insert id="insert">
-    insert into food (name, companyCategory, company, mainImage, ingredient)
+    insert into food (name, company_category, company, main_image, ingredient)
     values (#{name}, #{companyCategory}, #{company}, #{mainImage}, #{ingredient})
   </insert>
 

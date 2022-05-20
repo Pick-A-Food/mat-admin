@@ -8,7 +8,7 @@
     <!-- 검색 조건 -->
     <sql id ="search">
         <if test='type == "n"'>
-            and answerFlag=0
+            and answer_flag=0
         </if>
         <if test="keyword != null">
             and
@@ -31,26 +31,26 @@
 
     <select id="selectList" resultType="com.matjo.pickafood.admin.inquiry.domain.InquiryVO">
         select *
-        from inquiry where delFlag=0
+        from inquiry where del_flag=0
             <include refid="search"></include>
-        order by answerFlag asc, inquiry_seq desc
+        order by answer_flag asc, inquiry_seq desc
         limit #{skip},#{size}
     </select>
 
     <select id="getTotal" resultType="int">
         select count(inquiry_seq)
-            from inquiry where delFlag=0
+            from inquiry where del_flag=0
             <include refid="search"></include>
     </select>
 
     <select id="selectOne" resultType="com.matjo.pickafood.admin.inquiry.domain.InquiryVO">
-        select * from inquiry where inquiry_seq = #{inquiry_seq}
+        select * from inquiry where inquiry_seq = #{inquirySeq}
     </select>
 
     <update id="answerContent">
         update inquiry
-        set answerContent = #{answerContent} ,answerDate = now(), answerFlag = 1, answerId='yiseul'
-        where inquiry_seq = #{inquiry_seq}
+        set answer_content = #{answerContent} ,answer_date = now(), answer_flag = 1, answer_id = #{answerId}
+        where inquiry_seq = #{inquirySeq}
     </update>
 
 </mapper>

@@ -16,15 +16,7 @@
 </div>
 
 
-<script src="http://106.241.252.54:8085/vendor/jquery/jquery.min.js"></script>
 
-<script src="http://106.241.252.54:8085/vendor/jquery/jquery-ui.min.js"></script>
-
-<script>
-  $.widget.bridge('uibutton', $.ui.button)
-</script>
-
-<script src="http://106.241.252.54:8085/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <%--<script src="http://106.241.252.54:8085/vendor/chart.js/Chart.min.js"></script>--%>
 
@@ -44,10 +36,11 @@
 
 <%--<script src="https://adminlte.io/themes/v3/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>--%>
 
-<script src="https://adminlte.io/themes/v3/dist/js/adminlte.js?v=3.2.0"></script>
+
 
 <%--<script src="https://adminlte.io/themes/v3/dist/js/demo.js"></script>--%>
 
 <%--<script src="https://adminlte.io/themes/v3/dist/js/pages/dashboard.js"></script>--%>
+
 </body>
 </html>

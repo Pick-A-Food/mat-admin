@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class ReportDTO {
-    private Integer report_seq; //문의번호
+    private Integer reportSeq; //문의번호
     private int reportCategory; //카테고리
     private String category; //카테고리 이름
     private String content; //내용
@@ -22,5 +22,5 @@ public class ReportDTO {
 
     private String reportProcess; //신고결과
     private String answerId; //관리자 아이디
-    private Integer report_yn; //접수여부
+    private Integer reportYn; //접수여부
 }

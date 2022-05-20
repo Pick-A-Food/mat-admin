@@ -30,7 +30,6 @@ public class ReportController {
     //회원 신고 list 페이지
     @GetMapping("/memberReport")
     public void memberReportList(ListDTO listDTO, Model model) {
-
         log.info("report list.........");
 
         ListResponseDTO<ReportDTO> responseDTO = reportService.getList(listDTO);
@@ -39,6 +38,7 @@ public class ReportController {
         int total = responseDTO.getTotal();
         model.addAttribute("pageMaker", new PageMaker(listDTO.getPage(), total));
     }
+
 
     //회원 신고 상세 페이지
     @GetMapping("/memberReport/read/{bno}")

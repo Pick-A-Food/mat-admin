@@ -1,4 +1,4 @@
-package com.matjo.pickafood.admin.member;
+package mapper.board.admin.member;
 
 import com.matjo.pickafood.admin.common.dto.ListDTO;
 import com.matjo.pickafood.admin.member.domain.MemberVO;

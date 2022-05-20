@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.matjo.pickafood.admin.admin.mapper.AdminMapper">
+
+    <resultMap id="adminMap" type="com.matjo.pickafood.admin.admin.domain.AdminVO">
+        <result property="inquiry_seq" column="inquirySeq"></result>
+        <result property="id" column="id"></result>
+        <result property="pw" column="pw"></result>
+        <result property="name" column="name"></result>
+        <result property="profile" column="profile"></result>
+        <result property="position" column="position"></result>
+        <result property="nickname" column="nickname"></result>
+
+        <collection property="authList" resultMap="authMap" javaType="java.util.ArrayList"></collection>
+    </resultMap>
+
+    <resultMap id="authMap" type="com.matjo.pickafood.admin.admin.domain.Auth">
+        <result property="id" column="id"></result>
+        <result property="rolename" column="rolename"></result>
+    </resultMap>
+
+    <select id="selectOne"  resultMap="adminMap">
+        select * from admin inner join auth on admin.id = auth.id
+        where admin.id = #{id}
+    </select>
+
+</mapper>

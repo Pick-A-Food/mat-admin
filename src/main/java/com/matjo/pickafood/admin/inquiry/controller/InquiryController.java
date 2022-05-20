@@ -31,7 +31,6 @@ public class InquiryController {
     //list 페이지
     @GetMapping("/list")
     public void list(ListDTO listDTO, Model model){
-
         log.info("inquiry list.........");
         // log.info("page : "+page);
 
@@ -44,6 +43,7 @@ public class InquiryController {
     }
 
     //등록
+    // 권한 부여하기
     @GetMapping("/register")
     public String register(){
 
@@ -51,6 +51,13 @@ public class InquiryController {
     }
 
     
+    //삭제할 때
+    //@PreAuthorize("principal.username == # writer") ->#writer는 파라미터로 던저진 값
+
+    //수정할 때
+    //@PreAuthorize("principal.username == #board.writer") -> #은 파라미터 값
+
+    //csrf 토큰 값?
 
     //상세 조회
     @GetMapping("/read/{bno}")
@@ -66,12 +73,12 @@ public class InquiryController {
     }
 
     //상세 조회 코멘트 달기
-    @PostMapping("/read/{bno}")
+    @PostMapping("/read/{inquirySeq}")
     public String answerContentPost(InquiryDTO inquiryDTO){
 
         inquiryService.answerContent(inquiryDTO);
 
-        return "redirect:/inquiry/read/{bno}";
+        return "redirect:/inquiry/read/{inquirySeq}";
     }
 
 

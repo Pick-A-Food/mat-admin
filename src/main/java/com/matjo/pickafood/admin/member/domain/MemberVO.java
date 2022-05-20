@@ -12,5 +12,5 @@ import lombok.ToString;
 public class MemberVO {
   private String id;
   private String pw;
-  private String nickName;
+  private String nickname;
 }

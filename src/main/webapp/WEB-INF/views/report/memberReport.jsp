@@ -74,12 +74,12 @@
                         <tbody class="reportList">
                         <c:forEach items="${dtoList}" var="report">
                             <tr>
-                                <th scope="row">${report.report_seq}</th>
+                                <th scope="row">${report.reportSeq}</th>
                                 <td class="dateType"><c:out value="${report.category}"/></td>
-                                <td style="text-align: left;"><span><a href='/report/memberReport/read/${report.report_seq}' class="dtoLink"><c:out value="${report.content}"/></a></span></td>
+                                <td style="text-align: left;"><span><a href='/report/memberReport/read/${report.reportSeq}' class="dtoLink"><c:out value="${report.content}"/></a></span></td>
                                 <td class="dateType">
                                     <c:choose>
-                                        <c:when test="${report.report_yn eq 0}">
+                                        <c:when test="${report.reportYn eq 0}">
                                             <span style="color:blue">미접수</span>
                                         </c:when>
                                         <c:otherwise>

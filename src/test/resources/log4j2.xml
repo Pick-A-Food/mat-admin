@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration status="INFO">
+
+    <Appenders>
+        <!-- 콜솔 -->
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout charset="UTF-8" pattern="%d{hh:mm:ss} %5p [%c] %m%n"/>
+        </Console>
+    </Appenders>
+
+    <loggers>
+
+
+        <logger name="org" level="info" additivity="false">
+            <appender-ref ref="console" />
+        </logger>
+
+        <logger name="com" level="info" additivity="false">
+            <appender-ref ref="console" />
+        </logger>
+
+        <logger name="org.springframework" level="info" additivity="false">
+            <appender-ref ref="console" />
+        </logger>
+
+        <logger name="com.matjo.pickafood" level="debug" additivity="false">
+            <appender-ref ref="console" />
+        </logger>
+
+
+        <root level="debug" additivity="false">
+            <AppenderRef ref="console"/>
+        </root>
+
+    </loggers>
+
+</configuration>

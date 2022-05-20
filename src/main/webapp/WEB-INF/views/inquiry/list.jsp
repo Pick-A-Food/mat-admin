@@ -76,9 +76,9 @@
               <tbody class="inquiryList">
               <c:forEach items="${dtoList}" var="inquiry">
                 <tr>
-                  <th scope="row">${inquiry.inquiry_seq}</th>
+                  <th scope="row">${inquiry.inquirySeq}</th>
                   <td class="dateType"><c:out value="${inquiry.inquiryDate}"/></td>
-                  <td style="text-align: left;"><span><a href='/inquiry/read/${inquiry.inquiry_seq}' class="dtoLink"><c:out value="${inquiry.title}"/></a></span></td>
+                  <td style="text-align: left;"><span><a href='/inquiry/read/${inquiry.inquirySeq}' class="dtoLink"><c:out value="${inquiry.title}"/></a></span></td>
                   <td><c:out value="${inquiry.id}"/></td>
                   <td class="dateType">
                     <c:choose>

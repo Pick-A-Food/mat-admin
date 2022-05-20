@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <security:http>
+        <!-- 로그인과 관련해서 속상값이 엄청 많음 - 파라미터 이름도 지정 가능 password-parameter
+                login-processing-url 포스트 방식으로 처리되는 url - > 입력하는 페이지만 만들고 처리하는 페이지를 만들지 않는다. 시큐리티 내부에서 해결
+                조심해야 할 점: 파-->
+        <security:form-login></security:form-login>
+
+        <security:intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')"></security:intercept-url>
+
+        <security:access-denied-handler error-page="/accessError"></security:access-denied-handler>
+        <!-- ref 로그를 남겨서 기록하고 싶거나... 등의 따로 -->
+
+        <!-- post 방식들에 token 하나씩 줘야되는 것/ csrf 공격에 대비하기 위한 것... 하지만 필요 없을 경우 disabled -->
+
+        <security:csrf disabled="true"></security:csrf>
+
+        <security:remember-me key="12345678" data-source-ref="dataSource"></security:remember-me>
+
+    </security:http>
+
+    <security:authentication-manager>
+        <security:authentication-provider user-service-ref="customUserDetailsService">
+            <security:password-encoder ref="passwordEncoder"></security:password-encoder>
+        </security:authentication-provider>
+
+    </security:authentication-manager>
+
+    <context:component-scan base-package="com.matjo.pickafood.admin.security"></context:component-scan>
+
+</beans>
+
+
+

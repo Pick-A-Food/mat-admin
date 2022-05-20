@@ -50,15 +50,16 @@ public class InquiryServiceImpl implements InquiryService {
     //답변 달기
     @Override
     public void answerContent(InquiryDTO inquiryDTO) {
-        log.info("-------------dto--------------");
-        log.info(inquiryDTO.getAnswerContent());
+        //log.info("-------------dto--------------");
+        //log.info(inquiryDTO.getAnswerContent());
 
         InquiryVO inquiryVO = InquiryVO.builder()
-                .inquiry_seq(inquiryDTO.getInquiry_seq())
+                .inquirySeq(inquiryDTO.getInquirySeq())
+                .answerId(inquiryDTO.getAnswerId())
                 .answerContent(inquiryDTO.getAnswerContent())
                 .build();
 
-        log.info("vo: "+inquiryVO.getAnswerContent());
+        //log.info("vo: "+inquiryVO.getAnswerContent());
 
 
         inquiryMapper.answerContent(inquiryVO);
