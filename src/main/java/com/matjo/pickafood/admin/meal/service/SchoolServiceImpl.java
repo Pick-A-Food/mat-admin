@@ -48,4 +48,10 @@ public class SchoolServiceImpl implements SchoolService{
             .map(schoolVO -> modelMapper.map(schoolVO, SchoolDTO.class))
             .collect(Collectors.toList());
   }
+
+  @Override
+  public SchoolDTO selectOne(String schoolCode) {
+    SchoolVO schoolVO = schoolMapper.selectOne(schoolCode);
+    return modelMapper.map(schoolVO, SchoolDTO.class);
+  }
 }

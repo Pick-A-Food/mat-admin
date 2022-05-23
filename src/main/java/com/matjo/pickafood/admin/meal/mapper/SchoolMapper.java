@@ -12,4 +12,6 @@ public interface SchoolMapper {
 
   List<SchoolVO> selectRegion(String regionCode);
 
+  SchoolVO selectOne(String schoolCode);
+
 }

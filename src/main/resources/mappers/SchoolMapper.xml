@@ -29,4 +29,8 @@
   <select id="selectRegion" resultType="com.matjo.pickafood.admin.meal.domain.SchoolVO">
     select * from school where region_code = #{regionCode}
   </select>
+
+  <select id="selectOne" resultType="com.matjo.pickafood.admin.meal.domain.SchoolVO">
+    select * from school where school_code = #{schoolCode}
+  </select>
 </mapper>
