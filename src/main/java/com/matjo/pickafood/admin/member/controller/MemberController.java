@@ -27,4 +27,9 @@ public class MemberController {
     model.addAttribute("memberDTOList", memberDTOList);
 
   }
+
+  @GetMapping("/registerSchool")
+  public void registerSchool(Model model) {
+    
+  }
 }

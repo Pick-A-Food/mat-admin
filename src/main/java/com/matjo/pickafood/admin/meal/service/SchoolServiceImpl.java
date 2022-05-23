@@ -50,8 +50,17 @@ public class SchoolServiceImpl implements SchoolService{
   }
 
   @Override
+  public List<SchoolDTO> selectSchoolsByRegionAndName(String regionCode, String schoolName) {
+    List<SchoolVO> schoolList = schoolMapper.selectRegionAndName(regionCode, schoolName);
+    return schoolList.stream()
+            .map(schoolVO -> modelMapper.map(schoolVO, SchoolDTO.class))
+            .collect(Collectors.toList());
+  }
+
+  @Override
   public SchoolDTO selectOne(String schoolCode) {
     SchoolVO schoolVO = schoolMapper.selectOne(schoolCode);
     return modelMapper.map(schoolVO, SchoolDTO.class);
   }
+
 }

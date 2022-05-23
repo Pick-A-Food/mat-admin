@@ -31,9 +31,10 @@ public class SchoolController {
     return schoolService.selectAll();
   }
 
-  @GetMapping(value = "/list/{regionCode}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public @ResponseBody List<SchoolDTO> listOfRegion(@PathVariable("regionCode") String regionCode) {
-    return schoolService.selectSchoolsOfRegion(regionCode);
+  @GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
+  public @ResponseBody List<SchoolDTO> listOfRegion(String regionCode, String schoolName) {
+//    return schoolService.selectSchoolsOfRegion(regionCode);
+    return schoolService.selectSchoolsByRegionAndName(regionCode, schoolName);
   }
 
 }

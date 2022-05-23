@@ -16,6 +16,10 @@ public interface SchoolService {
 
   List<SchoolDTO> selectSchoolsOfRegion(String regionCode);
 
+  List<SchoolDTO> selectSchoolsByRegionAndName(String regionCode, String schoolName);
+
   SchoolDTO selectOne(String schoolCode);
+
+
 
 }

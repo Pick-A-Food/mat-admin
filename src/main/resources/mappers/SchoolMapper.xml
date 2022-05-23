@@ -30,6 +30,10 @@
     select * from school where region_code = #{regionCode}
   </select>
 
+  <select id="selectRegionAndName" resultType="com.matjo.pickafood.admin.meal.domain.SchoolVO">
+    select * from school where region_code = #{regionCode} and school_name like concat('%', #{schoolName},'%')
+  </select>
+
   <select id="selectOne" resultType="com.matjo.pickafood.admin.meal.domain.SchoolVO">
     select * from school where school_code = #{schoolCode}
   </select>
