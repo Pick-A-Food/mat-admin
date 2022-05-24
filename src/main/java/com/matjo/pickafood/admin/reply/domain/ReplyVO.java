@@ -17,7 +17,7 @@ public class ReplyVO {
     private Integer replySeq;
     private Integer boardSeq;
     private Integer originReplySeq;
-    private Integer rootReplySeq;
+    private Integer replyNum;
 
     private String content;
     private String id;

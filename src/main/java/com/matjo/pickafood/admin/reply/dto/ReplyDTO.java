@@ -13,8 +13,8 @@ public class ReplyDTO {
 
     private Integer replySeq;
     private Integer boardSeq;
-    private Integer rootReplySeq;
     private Integer originReplySeq;
+    private Integer replyNum;
 
     private String content;
     private String id;
