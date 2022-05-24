@@ -7,31 +7,40 @@
 
     <!-- 검색 조건 -->
     <sql id ="search">
-        <if test='type == "n"'>
-            and food_seq > 0
+        <if test='type != null and keyword == null'>
+            and company_category = #{type}
         </if>
+
+
         <if test="keyword != null">
             and
             <foreach collection="types" item="item" separator="or" open="(" close=")">
                 <if test='item == "t"'>
-                    title like concat('%', #{keyword}, '%')
+                    name like concat('%', #{keyword}, '%')
                 </if>
 
                 <if test='item == "c"'>
-                    content like concat('%', #{keyword}, '%')
+                    same_factory like concat('%', #{keyword}, '%')
                 </if>
                 <if test='
                     item == "w"'>
-                    writer like concat('%', #{keyword}, '%')
+                    ingredient concat('%', #{keyword}, '%')
                 </if>
             </foreach>
         </if>
     </sql>
 
+    <select id="companyList" resultType="com.matjo.pickafood.admin.food.domain.CompanyVO">
+        select *
+        from category where cate_num between 40000 and 50000
+        <include refid="search"></include>
+        order by cate_num desc
+        limit #{skip},#{size}
+    </select>
 
     <select id="selectList" resultType="com.matjo.pickafood.admin.food.domain.FoodVO">
         select *
-        from food where food_seq > 0
+        from food where food_seq > 0 and del_flag = 0
         <include refid="search"></include>
         order by food_seq desc
         limit #{skip},#{size}
@@ -39,12 +48,18 @@
 
     <select id="getTotal" resultType="int">
         select count(food_seq)
-        from food where food_seq > 0
+        from food where food_seq > 0 and del_flag = 0
         <include refid="search"></include>
     </select>
+
+    <select id="getCompanyTotal" resultType="int">
+        select count(cate_num)
+        from category where cate_num between 40000 and 50000
+    </select>
+
   <insert id="insert">
-    insert into food (name, company_category, company, main_image, ingredient)
-    values (#{name}, #{companyCategory}, #{company}, #{mainImage}, #{ingredient})
+    insert into food (name, company_category, company, main_image, ingredient, allergy_ingredient, same_factory)
+    values (#{name}, #{company_category}, #{company}, #{main_image}, #{ingredient}, #{allergy_ingredient}, #{same_factory})
   </insert>
 
 </mapper>

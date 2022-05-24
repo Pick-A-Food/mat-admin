@@ -29,9 +29,9 @@ public class AdminMapperTest {
     public void testInsert() {
 
         AdminVO adminVo = AdminVO.builder()
-                .id("kim")
+                .id("park")
                 .pw(passwordEncoder.encode("aaa"))
-                .name("김이슬")
+                .name("박수홍")
                 .nickname("하이")
                 .position("매니저")
                 .build();
@@ -40,9 +40,9 @@ public class AdminMapperTest {
         log.debug("pw byte: {}", "$2a$10$TJSqFtRd/WBnY/tiRRcx4OQ32kAFQsSLUTSSxrdA12vBWw4VwLW7q".getBytes().length);
 
         adminMapper.register(adminVo);
-// nn
+
         Auth auth = Auth.builder()
-                .id("kim")
+                .id("park")
                 .rolename("ADMIN") /* ROLE_ 는 자동으로 붙는 접두사임 */
                 .build();
 

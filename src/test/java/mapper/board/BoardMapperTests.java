@@ -49,7 +49,7 @@ public class BoardMapperTests {
     @Test
     public void testSelectOne() {
 
-        int boardSeq = 1;
+        int boardSeq = 40;
 
         BoardVO board = boardMapper.selectOne(boardSeq);
 
@@ -74,5 +74,4 @@ public class BoardMapperTests {
         log.info(total);
 
     }
-
-    }
+}

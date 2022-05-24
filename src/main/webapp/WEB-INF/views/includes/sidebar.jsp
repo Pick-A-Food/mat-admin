@@ -87,9 +87,9 @@
 
         <%-- 음식 재료 정보들 --%>
           <li class="nav-item">
-            <a href="/food/list" class="nav-link">
+            <a href="/food/main" class="nav-link">
               <i class="nav-icon fas fa-apple-alt"></i>
-              <p>알러지 지식창고</p>
+              <p>알레르기 지식창고</p>
             </a>
           </li>
       </ul>

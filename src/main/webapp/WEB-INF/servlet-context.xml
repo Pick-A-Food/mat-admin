@@ -16,17 +16,16 @@
 
   <mvc:resources mapping="/resources/**" location="/resources/"></mvc:resources>
 
-  <context:component-scan base-package="com.matjo.pickafood.admin.board"/>
-  <context:component-scan base-package="com.matjo.pickafood.admin.**.controller"/>
-  <context:component-scan base-package="com.matjo.pickafood.admin.inquiry"/>
-  <context:component-scan base-package="com.matjo.pickafood.admin.report"/>
-  <context:component-scan base-package="com.matjo.pickafood.admin.member"/>
-  <context:component-scan base-package="com.matjo.pickafood.admin.notice"/>
-  <context:component-scan base-package="com.matjo.pickafood.admin.file"/>
-  <context:component-scan base-package="com.matjo.pickafood.admin.reply"/>
-  <context:component-scan base-package="com.matjo.pickafood.admin.food"/>
-  <context:component-scan base-package="com.matjo.pickafood.admin.file"/>
-  <context:component-scan base-package="com.matjo.pickafood.admin.meal"/>
+  <context:component-scan base-package="com.matjo.pickafood.admin.board.controller"/>
+  <context:component-scan base-package="com.matjo.pickafood.admin.inquiry.controller"/>
+  <context:component-scan base-package="com.matjo.pickafood.admin.report.controller"/>
+  <context:component-scan base-package="com.matjo.pickafood.admin.member.controller"/>
+  <context:component-scan base-package="com.matjo.pickafood.admin.notice.controller"/>
+  <context:component-scan base-package="com.matjo.pickafood.admin.file.controller"/>
+  <context:component-scan base-package="com.matjo.pickafood.admin.reply.controller"/>
+  <context:component-scan base-package="com.matjo.pickafood.admin.food.controller"/>
+  <context:component-scan base-package="com.matjo.pickafood.admin.file.controller"/>
+  <context:component-scan base-package="com.matjo.pickafood.admin.meal.controller"/>
 
   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
     <property name="prefix" value="/WEB-INF/views/"/>

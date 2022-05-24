@@ -21,8 +21,8 @@
 
     <insert id="insertBoardFile" parameterType="fileDTO">
         INSERT INTO file_attach
-        ( fileSeq
-        , boardSeq)
+        ( file_seq
+        , board_seq)
           value
           ( #{fileSeq}
         , #{boardSeq})

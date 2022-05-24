@@ -14,18 +14,22 @@
        https://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-  <context:component-scan base-package="com.matjo.pickafood.admin.admin"></context:component-scan>
-  <context:component-scan base-package="com.matjo.pickafood.admin.board"></context:component-scan>
-  <context:component-scan base-package="com.matjo.pickafood.admin.common"></context:component-scan>
-  <context:component-scan base-package="com.matjo.pickafood.admin.reply"></context:component-scan>
-  <context:component-scan base-package="com.matjo.pickafood.admin.inquiry"></context:component-scan>
-  <context:component-scan base-package="com.matjo.pickafood.admin.report"></context:component-scan>
-  <context:component-scan base-package="com.matjo.pickafood.admin.member"></context:component-scan>
-  <context:component-scan base-package="com.matjo.pickafood.admin.meal"></context:component-scan>
-  <context:component-scan base-package="com.matjo.pickafood.admin.notice"></context:component-scan>
-  <context:component-scan base-package="com.matjo.pickafood.admin.file"></context:component-scan>
-  <context:component-scan base-package="com.matjo.pickafood.admin.food"></context:component-scan>
+  <context:component-scan base-package="com.matjo.pickafood.admin.admin.service"></context:component-scan>
+  <context:component-scan base-package="com.matjo.pickafood.admin.board.service"></context:component-scan>
+  <context:component-scan base-package="com.matjo.pickafood.admin.reply.service"></context:component-scan>
+  <context:component-scan base-package="com.matjo.pickafood.admin.inquiry.service"></context:component-scan>
+  <context:component-scan base-package="com.matjo.pickafood.admin.report.service"></context:component-scan>
+  <context:component-scan base-package="com.matjo.pickafood.admin.member.service"></context:component-scan>
+  <context:component-scan base-package="com.matjo.pickafood.admin.meal.service"></context:component-scan>
+  <context:component-scan base-package="com.matjo.pickafood.admin.notice.service"></context:component-scan>
+  <context:component-scan base-package="com.matjo.pickafood.admin.file.service"></context:component-scan>
+  <context:component-scan base-package="com.matjo.pickafood.admin.food.service"></context:component-scan>
   <context:component-scan base-package="com.matjo.pickafood.crawling"/>
+
+  <context:component-scan base-package="com.matjo.pickafood.admin.config"/>
+
+  <context:component-scan base-package="com.matjo.pickafood.admin.security"></context:component-scan>
+
 
   <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 

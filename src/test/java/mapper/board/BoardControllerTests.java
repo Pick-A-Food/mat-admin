@@ -63,7 +63,7 @@ public class BoardControllerTests {
     public void testModify() throws Exception {
         String resultPage = mockMvc
                 .perform(MockMvcRequestBuilders.post("/board/modify")
-                        .param("bno", "1")
+                        .param("boardSeq", "40")
                         .param("title", "수정된 테스트 새글 제목")
                         .param("content", "수정된 테스트 새글 내용"))
                 .andReturn().getModelAndView().getViewName();

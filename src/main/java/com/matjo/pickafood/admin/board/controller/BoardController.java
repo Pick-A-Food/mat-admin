@@ -3,10 +3,7 @@ package com.matjo.pickafood.admin.board.controller;
 import com.matjo.pickafood.admin.board.service.BoardService;
 import com.matjo.pickafood.admin.board.dto.BoardDTO;
 import com.matjo.pickafood.admin.board.dto.UploadResultDTO;
-import com.matjo.pickafood.admin.common.dto.ListDTO;
-import com.matjo.pickafood.admin.board.vo.BoardVO;
-import com.matjo.pickafood.admin.common.dto.ListDTO;
-import com.matjo.pickafood.admin.common.dto.ListResponseDTO;
+import com.matjo.pickafood.admin.common.dto.*;
 import com.matjo.pickafood.admin.common.dto.ListDTO;
 import com.matjo.pickafood.admin.common.dto.ListResponseDTO;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.List;
 
 @Log4j2
@@ -37,6 +33,9 @@ public class BoardController {
         ListResponseDTO<BoardDTO> responseDTO = boardService.getList(listDTO);
         model.addAttribute("boardList", responseDTO.getDtoList());
 
+        int total = responseDTO.getTotal();
+        model.addAttribute("pageMaker", new PageMaker(listDTO.getPage(), total));
+
     }
 
     @GetMapping("/register")
@@ -57,12 +56,12 @@ public class BoardController {
 
     }
 
-    @GetMapping("/read/{bno}")
-    public String read(@PathVariable("bno") Integer bno, ListDTO listDTO, Model model){
+    @GetMapping("/read/{boardSeq}")
+    public String read(@PathVariable("boardSeq") Integer boardSeq, ListDTO listDTO, Model model){
 
         log.info(".read");
         model.addAttribute("listDTO", listDTO);
-        model.addAttribute("board", boardService.getOne(bno));
+        model.addAttribute("board", boardService.getOne(boardSeq));
 
         return "/board/read";
     }
@@ -86,24 +85,24 @@ public class BoardController {
         return "redirect:/board/read/" + boardSeq + listDTO.getLink();
     }
 
-    @GetMapping({"/remove/{bno}"})
+    @GetMapping({"/remove/{boardSeq}"})
     public String getNotSupported(){
         return "redirect:/board/list";
     }
 
-    @PostMapping("/remove/{bno}")
-    public String removePost(@PathVariable("bno") Integer bno, RedirectAttributes rttr) {
+    @PostMapping("/remove/{boardSeq}")
+    public String removePost(@PathVariable("boardSeq") Integer boardSeq, RedirectAttributes rttr) {
 
-        boardService.remove(bno);
+        boardService.remove(boardSeq);
         rttr.addFlashAttribute("result", "removed");
         return "redirect:/board/list";
     }
 
-    @GetMapping("/files/{bno}")
+    @GetMapping("/files/{boardSeq}")
     @ResponseBody
-    public List<UploadResultDTO> getFiles(@RequestParam("bno") Integer bno){
+    public List<UploadResultDTO> getFiles(@RequestParam("boardSeq") Integer boardSeq){
 
-        return boardService.getFiles(bno);
+        return boardService.getFiles(boardSeq);
     }
 
     }

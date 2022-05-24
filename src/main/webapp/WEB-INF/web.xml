@@ -32,7 +32,7 @@
 
     <!-- Tomcat 파일 업로드 처리를 위한 config -->
     <multipart-config>
-      <location>D:\\upload</location> <!-- 첨부파일이 올라가는 폴더 -->
+      <location>C:\\upload</location> <!-- 첨부파일이 올라가는 폴더 -->
       <!--      <location>/Users/suhong/upload/</location>-->
       <!--      <location>http://106.241.252.54:8085/upload</location>-->
       <max-file-size>20971520</max-file-size> <!--1MB * 20 파일 하나 최대 크기-->

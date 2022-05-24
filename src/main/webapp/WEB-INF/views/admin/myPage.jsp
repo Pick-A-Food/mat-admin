@@ -15,12 +15,12 @@
     </div>
 </section>
 
-<form class="modifyForm" name="modifyForm" action="/admin/modifyMine" method="post">
+<form class="modifyForm" name="modifyForm" action="/admin/modify" method="post">
 <section class="content">
     <div class="row">
         <div class="col-12">
             <div class="form-group" style="margin-bottom: 10px">
-                <button class="btn btn-success float-right modifyBtn" style="padding-bottom: 10px; margin-right: 10vw"><i class="fa fa-plus"></i>수정</button>
+                <button class="btn btn-success float-right modifyBtn" type="submit" style="padding-bottom: 10px; margin-right: 10vw"><i class="fa fa-plus"></i>수정</button>
             </div>
         </div>
     </div>
@@ -33,10 +33,10 @@
     <sec:authentication property="principal.name" var="name" />
     <sec:authentication property="principal.position" var="position" />
     <sec:authentication property="principal.nickname" var="nickname" />
-    <sec:authentication property="principal.inquirySeq" var="inquirySeq" />
+    <sec:authentication property="principal.adminSeq" var="adminSeq" />
 
+    <input type="hidden" name="adminSeq" value="${adminSeq}">
 
-    <input type="hidden" name="inquirySeq" value="${inquirySeq}">
         <div class="card-body" style="display: block;">
             <p><c:out value="${position} | ${name}"></c:out> 님</p>
             <p style="width: 20vw; ">닉네임 <input type="text"
@@ -47,11 +47,11 @@
                 <input type="text" class="profile" name="profile" value="${profile}" style="width: 50vw">
             <div class="profileImage"><img src="${profile}" style="max-height: 100px"></div>
             </p>
-            <p style="width: 20vw; ">비밀번호
-                <input type="password" class="pw" name="pw" style="width: 50vw">
+           <%-- <p style="width: 20vw; ">비밀번호
+                <input type="password" class="pwMod" name="pw" style="width: 50vw">
             </p>
             <p style="width: 20vw; ">비번확인
-                <input type="password" class="pwCheck" name="pwCheck" style="width: 50vw"></p>
+                <input type="password" class="pwCheck" name="pwCheck" style="width: 50vw"></p>--%>
         </div>
     </form>
 </sec:authorize>
@@ -66,20 +66,6 @@
 <%-- Axios --%>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-
-
-    //수정 완료
-    document.querySelector(".modifyBtn").addEventListener("click", (e) => {
-        e.stopPropagation()
-        e.preventDefault()
-
-        const pw = pw.getAttribute("value")
-console.log("..")
-        console.log(pw)
-        <c:if test="">
-
-        </c:if>
-    })
 
 
 </script>

@@ -13,7 +13,7 @@ const modalText = () => {
           저장
       </button>
     <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal" id="btnClose">
-      <i class="ace-icon fa fa-times"></i>닫기
+      닫기
     </button>
   </div>`;
 }

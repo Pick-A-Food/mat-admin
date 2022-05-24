@@ -1,4 +1,4 @@
-package com.matjo.pickafood.admin.common.config;
+package com.matjo.pickafood.admin.config;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;

@@ -3,7 +3,15 @@
 
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
 <link href="/resources/css/table.css" rel="stylesheet" type="text/css">
-
+<style>
+    .box {
+        width: 850px;
+        white-space: nowrap;
+        overflow: hidden;
+        display: block;
+        text-overflow:ellipsis;
+    }
+</style>
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -13,7 +21,7 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active">알러지 지식창고</li>
+                    <li class="breadcrumb-item active" onclick="location.href='/food/main'" style="cursor: pointer">알레르기 지식창고</li>
                 </ol>
             </div>
         </div>
@@ -57,15 +65,20 @@
                 </div>
 
                 <div class="card-body table-responsive p-0">
-                    <table class="table table-hover text-nowrap">
+                    <table class="table table-hover text-nowrap" >
                         <thead>
                         <tr>
                             <th>#</th>
                             <th></th>
-                            <th style="text-align: left;">이름 / 성분 재료 / (같은 제조 공장 식품)</th>
+                            <th style="text-align: left;">이름 / 성분 재료 / <span style="color: brown">(같은 제조 공장 식품)</span></th>
                         </tr>
                         </thead>
                         <tbody class="foodList">
+                        <style>
+                            .hidden {
+                                display: none;
+                            }
+                        </style>
                         <c:forEach items="${dtoList}" var="food">
                             <c:if test="${food.foodSeq % 2 == 0}">
                                 <tr style=" background-color: #f7faf8">
@@ -77,9 +90,14 @@
                                 <td><img src="${food.mainImage}" style="max-width:100px"/></td>
                                 <td style="text-align: left;">
                                     <span style="font-size: 15px">${food.name}</span><hr>
-                                    <span style="font-size: 18px">${food.ingredient}</span>
+
+                                    <div class="ingredients">
+                                        <span class="box" style="font-size: 17px">${food.allergyIngredient}</span>
+                                        <span class="box"  style="font-size: 17px">${food.ingredient}</span>
+                                    </div>
+
                                     <c:if test="${food.sameFactory != null}">
-                                        <hr><span style="font-size: 15px">${food.sameFactory}</span>
+                                        <hr><span style="font-size: 15px; color: brown">${food.sameFactory}</span>
                                     </c:if>
                                 </td>
                             </tr>
@@ -127,11 +145,16 @@
 </form>
 
 <script>
-    const inquiryList = document.querySelector(".foodList");
+    // function test(){
+    //     $(".box").attr("display:none");
+    //     $(".show-box").remove("hidden");
+    // }
+    const foodList = document.querySelector(".foodList");
 
     const linkDiv = document.querySelector(".pagination")
     const actionForm = document.querySelector(".actionForm")
-
+    
+    
     linkDiv.addEventListener("click", (e) => {
         e.stopPropagation()
         e.preventDefault()
@@ -148,7 +171,21 @@
 
     }, false)
     // ↑ 버블링 ok 캡쳐링은 false
-
+    
+    foodList.addEventListener("click", (e) => {
+        const target = e.target.closest("div");
+        if (target.className !== "ingredients") {
+            return;
+        }
+        
+        const boxShort = target.querySelector(".box");
+        const boxLong = target.querySelector(".show-box");
+        
+        boxShort.classList.toggle("hidden")
+        boxLong.classList.toggle("hidden")
+        
+    }, false)
+    
 </script>
 
 <%@ include file="/WEB-INF/views/includes/footer.jsp"%>

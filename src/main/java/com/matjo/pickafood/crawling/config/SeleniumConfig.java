@@ -1,9 +1,12 @@
 package com.matjo.pickafood.crawling.config;
 
 import lombok.Data;
+import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 @Data
 public class SeleniumConfig {
@@ -17,8 +20,12 @@ public class SeleniumConfig {
     this.WEB_DRIVER_ID = WEB_DRIVER_ID;
     this.WEB_DRIVER_PATH = WEB_DRIVER_PATH;
     ChromeOptions options = new ChromeOptions();
-    // options.addArguments("headless"); // 브라우저 안 보이기
-    this.driver = new ChromeDriver(options);
-  }
 
+    this.driver = new ChromeDriver(options);
+
+//    DesiredCapabilities capabilities = new DesiredCapabilities();
+//    capabilities.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.IGNORE);
+    // options.addArguments("headless"); // 브라우저 안 보이기
+//    this.driver = new ChromeDriver(capabilities);
+  }
 }

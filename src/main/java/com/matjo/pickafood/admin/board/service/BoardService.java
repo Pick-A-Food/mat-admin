@@ -15,11 +15,11 @@ public interface BoardService {
 
     void register(BoardDTO boardDTO);
 
-    BoardDTO getOne(Integer boardSeq);
+    BoardDTO getOne(Integer board_seq);
 
     void update(BoardDTO boardDTO);
 
-    void remove(Integer boardSeq);
+    void remove(Integer board_seq);
 
-    List<UploadResultDTO> getFiles(Integer boardSeq);
+    List<UploadResultDTO> getFiles(Integer board_seq);
 }

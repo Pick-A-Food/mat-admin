@@ -8,7 +8,7 @@
     <sql id="search">
         <where>
             <if test="keyword != null">
-                <foreach collection="types" item="item" separator=" OR " open="(" close=")">
+                <foreach collection="types" item="item" open="(" close=")">
                     <if test='item == "t"'>
                         title like concat('%', #{keyword}, '%')
                     </if>
@@ -16,17 +16,20 @@
                         content like concat('%', #{keyword}, '%')
                     </if>
                     <if test='item == "w"'>
-                        writer like concat('%', #{keyword}, '%')
+                        nickName like concat('%', #{keyword}, '%')
                     </if>
                 </foreach>
             </if>
+            and board_category=30001 and del_flag=0
         </where>
     </sql>
 
     <select id = "selectList" resultType="com.matjo.pickafood.admin.board.vo.BoardVO">
         select board_seq, board_category, main_image, title, content, id, nickname, reg_date, update_date, reply_count, del_flag, like_count, views_count
         from board
+
         <include refid="search"></include>
+
         order by board_seq desc
         limit #{skip}, #{size}
     </select>
@@ -49,10 +52,10 @@
     </insert>
 
     <update id = "delete">
-        update board set delFlag = 1 where board_seq = #{boardSeq}
+        update board set del_flag = 1 where board_seq = #{boardSeq}
     </update>
 
-<!-- 아마도 변경 가능성 있음  -->
+    <!-- 아마도 변경 가능성 있음  -->
 
     <update id="update">
         update board set title = #{title}, content= #{content}, update_date = now() where board_seq = #{boardSeq}

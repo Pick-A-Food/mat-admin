@@ -26,4 +26,8 @@
         where admin.id = #{id}
     </select>
 
+    <update id="update">
+        update admin set profile = #{profile}, nickname = #{nickname} where id= #{id}
+    </update>
+
 </mapper>

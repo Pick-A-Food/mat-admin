@@ -28,4 +28,7 @@ public interface AdminMapper {
 
     AdminVO selectOne(String id);
 
+
+    void update(AdminVO adminVO);
+
 }

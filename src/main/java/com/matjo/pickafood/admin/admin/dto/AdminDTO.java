@@ -13,7 +13,7 @@ import java.util.Collection;
 @ToString
 public class AdminDTO extends User {
 
-    private int inquirySeq;
+    private int adminSeq;
     private String name;
     private String position;
     private String nickname;

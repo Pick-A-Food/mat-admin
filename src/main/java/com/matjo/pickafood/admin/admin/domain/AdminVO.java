@@ -11,7 +11,7 @@ import java.util.List;
 @ToString
 public class AdminVO {
 
-    private int inquirySeq;
+    private int adminSeq;
     private String name;
     private String position;
     private String nickname;

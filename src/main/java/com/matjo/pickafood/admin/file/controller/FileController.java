@@ -32,7 +32,7 @@ public class FileController {
     public ResponseEntity<byte[]> viewFile(String fileName){  //@PathVariable("fileName")
         //log.info("--------------------: "+fileName);
 
-        File targetFile = new File("D:\\upload\\"+fileName);
+        File targetFile = new File("C:\\upload\\"+fileName);
 
         try {
             String mimeType = Files.probeContentType(targetFile.toPath());
@@ -74,7 +74,7 @@ public class FileController {
             String saveFolder = makeFolders();
             //날짜별로 첨부파일 정리하기
 
-            File saveFile = new File("D:\\upload\\"+saveFolder+"\\"+saveName);
+            File saveFile = new File("C:\\upload\\"+saveFolder+"\\"+saveName);
 
             // 서버까지 파일 업로드가 된 상태... 이제 저장을 해야하는데!
             try (InputStream in = file.getInputStream();
@@ -89,7 +89,7 @@ public class FileController {
             if(img){
                 //saveName == UUID + "_" + fileName
                 String thumbFileName = saveFolder+"\\s_"+saveName;
-                File thumbFile = new File("D:\\upload\\"+thumbFileName);
+                File thumbFile = new File("C:\\upload\\"+thumbFileName);
 
                 try {
                     Thumbnails.of(saveFile)
@@ -122,7 +122,7 @@ public class FileController {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         String str = sdf.format(new java.util.Date()); //new Date 나는 java.util 에 있는 것으로 사용한다.
 
-        File folderPath = new File("D:\\upload\\"+str);
+        File folderPath = new File("C:\\upload\\"+str);
 
         //이 경로가 존재하지 않는다면?
         if(!folderPath.exists()){
@@ -143,19 +143,19 @@ public class FileController {
         //name -> uuid_fileName 상태 _ 앞에 uuid만 가져오기
         String uuid = name.substring(0,name.indexOf("_"));
 
-        //log.info("path: "+path);
-        //log.info("name: "+name);
+        // log.info("path: "+path);
+        // log.info("name: "+name);
 
-        File targetFile = new File("D:\\upload\\"+fileName);
+        File targetFile = new File("C:\\upload\\"+fileName);
         boolean result = targetFile.delete();
 
         //원본 파일 삭제 후 삭제 성공하면 섬네일 삭제하기
         if(result){
-            File thumbFile = new File("D:\\upload\\"+path+"\\s_"+name);
+            File thumbFile = new File("C:\\upload\\"+path+"\\s_"+name);
             thumbFile.delete();
         }
 
-        //독립적인 DB등록 방법
+        //독립적인 DB 등록 방법
         fileService.remove(uuid);
 
         return "success";

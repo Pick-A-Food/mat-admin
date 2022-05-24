@@ -57,10 +57,17 @@
     </div>
     <form class="removeForm card-body" action="/board/remove/${boardSeq}" method="post">
     <div class="form-group">
-      <button class="btn bg-gradient-info float-right removeBtn">
+      <button data-toggle="modal" data-target="#modal-remove" class="btn bg-gradient-info float-right removeBtn">
         <i class="fa-file-image-o"></i>삭제</button>
     </div>
     </form>
+    <div id="modal-remove" class="modal" tabindex="-1" role="dialog" aria-labelledby="테스트정보 등록" aria-describedby="테스트 모달">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+        </div>
+      </div>
+    </div>
     <div class="col-md-12">
       <div class="card card-primary card-outline">
         <div class="card-header">
@@ -91,6 +98,7 @@
     }
 </style>
 
+<script src="/resources/js/removeModal.js"></script>
 <script type="text/javascript">
     document.querySelector(".file-add").addEventListener("click",(e) =>{
         console.log("123")
@@ -108,12 +116,14 @@
     <%--const removeForm = sQuery(".removeForm")--%>
 
     <%--sQuery(".removeBtn").addEventListener("click",(e)=> {--%>
-    <%--    removeForm.setAttribute("remove", `/board/remove/${board.boardSeq}`)--%>
+    <%--    removeForm.setAttribute("remove", `/board/remove/${board.board_seq}`)--%>
     <%--    removeForm.submit()--%>
     <%--}, false)--%>
 
     document.querySelector(".removeBtn").addEventListener("click", (e) => {
         e.preventDefault()
+        document.querySelector(".modal-content").innerHTML = modalText();
+        removeModalSubmit(".removeForm");
         e.stopPropagation()
 
         const removeForm = document.querySelector(".removeForm")

@@ -39,4 +39,6 @@ public class ReplyVO {
     private int likeCount;
     private String mainImage;
 
+    private String buttonIcon;
+
 }

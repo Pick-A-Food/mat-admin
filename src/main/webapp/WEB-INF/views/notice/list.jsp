@@ -102,7 +102,7 @@
                                         <td class="dateType">${Integer.valueOf(Math.floor(board.date/60))}시간 전</td>
                                     </c:when>
                                     <c:when test="${board.date <= 60*24*7}">
-                                        <td class="dateType">${Integer.valueOf(Math.floor(board.date/420))}일 전</td>
+                                        <td class="dateType">${Integer.valueOf(Math.floor(board.date/1440))}일 전</td>
                                     </c:when>
                                     <c:when test="${board.date > 60*24}">
                                         <td class="dateType">${board.regDate}</td>

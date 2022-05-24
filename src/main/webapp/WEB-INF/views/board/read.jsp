@@ -36,7 +36,7 @@
               <input type="text" id="inputName" name="title" class="for m-control" style="margin-right: 2vw; width: 1800px;"
               value='<c:out value="${board.title}"/>' readonly="readonly">
               <label for="inputName" style="width: 10vw;">닉네임</label>
-              <input type="text" name="nickname" class="form-control" value='<c:out value="${board.nickName}"/>' readonly="readonly">
+              <input type="text" name="nickname" class="form-control" value='<c:out value="${board.nickname}"/>' readonly="readonly">
             </div>
             <input type="hidden" value="kim" name="id">
             <div class="form-group board">

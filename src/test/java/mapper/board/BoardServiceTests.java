@@ -67,14 +67,14 @@ public class BoardServiceTests {
 
     @Test
     public void testGetOne(){
-        Integer boardSeq = 1;
+        Integer boardSeq = 40;
         BoardDTO boardDTO = boardService.getOne(boardSeq);
         log.info(boardDTO);
     }
 
     @Test
     public void testUpdate(){
-        Integer bno = 21;
+        Integer bno = 40;
         BoardDTO boardDTO = boardService.getOne(bno);
 
         if(boardDTO == null){return;}

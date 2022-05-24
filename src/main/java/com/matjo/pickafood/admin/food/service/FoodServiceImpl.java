@@ -2,7 +2,9 @@ package com.matjo.pickafood.admin.food.service;
 
 import com.matjo.pickafood.admin.common.dto.ListDTO;
 import com.matjo.pickafood.admin.common.dto.ListResponseDTO;
+import com.matjo.pickafood.admin.food.domain.CompanyVO;
 import com.matjo.pickafood.admin.food.domain.FoodVO;
+import com.matjo.pickafood.admin.food.dto.CompanyDTO;
 import com.matjo.pickafood.admin.food.dto.FoodDTO;
 import com.matjo.pickafood.admin.food.mapper.FoodMapper;
 import com.matjo.pickafood.admin.inquiry.domain.InquiryVO;
@@ -25,10 +27,10 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public ListResponseDTO<FoodDTO> getList(ListDTO listDTO) {
-        List<FoodVO> inquiryVOList = foodMapper.selectList(listDTO);
+        List<FoodVO> foodVOList = foodMapper.selectList(listDTO);
 
         List<FoodDTO> dtoList =
-                inquiryVOList.stream()
+                foodVOList.stream()
                         .map(foodVO -> modelMapper.map(foodVO, FoodDTO.class))
                         .collect(Collectors.toList());
 
@@ -38,9 +40,25 @@ public class FoodServiceImpl implements FoodService {
                 .build();
     }
 
-  @Override
-  public void insert(FoodDTO foodDTO) {
-    FoodVO foodVO = modelMapper.map(foodDTO, FoodVO.class);
-    foodMapper.insert(foodVO);
-  }
+    @Override
+    public void insert(FoodDTO foodDTO) {
+      FoodVO foodVO = modelMapper.map(foodDTO, FoodVO.class);
+      foodMapper.insert(foodVO);
+    }
+
+
+    @Override
+    public ListResponseDTO<CompanyDTO> getMain(ListDTO listDTO) {
+        List<CompanyVO> companyList = foodMapper.companyList(listDTO);
+
+        List<CompanyDTO> dtoList =
+                companyList.stream()
+                        .map(companyVO -> modelMapper.map(companyVO, CompanyDTO.class))
+                        .collect(Collectors.toList());
+
+        return ListResponseDTO.<CompanyDTO>builder()
+                .dtoList(dtoList)
+                .total(foodMapper.getCompanyTotal(listDTO))
+                .build();
+    }
 }

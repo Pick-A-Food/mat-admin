@@ -20,6 +20,11 @@
         </div>
     </section>
 
+<sec:authorize access="isAuthenticated()">
+    <sec:authentication property="principal.profile" var="profile" />
+    <sec:authentication property="principal.nickname" var="nickname" />
+    <sec:authentication property="principal.id" var="id" />
+
     <section class="content">
         <div class="row">
             <div class="col-12">
@@ -38,8 +43,8 @@
                             <label for="inputName" style="width: 7vw; ">제 목</label>
                             <input type="text" id="inputName" name="title" class="form-control inputName" style="margin-right: 5vw">
                             <label for="inputName" style="width: 10vw;">닉네임</label>
-                            <input type="text" class="form-control inputId" name="nickname" placeholder="로그인 하면 자동으로 들어갈 곳" >
-                            <input type="hidden" name="id" value="member123">
+                            <input type="text" class="form-control inputId" name="nickname" value="${nickname}" readonly style="background-color:white;">
+                            <input type="hidden" name="id" value="${id}">
                         </div>
                         <div class="hiddenClass"></div>
                         <div class="form-group">
@@ -68,7 +73,6 @@
                         .uploadResult > div {
                             padding-right: 20px;
                             border-color: sienna;
-
                             /*   자동으로 줄 바꾸는 것 넣기 */
                         }
 
@@ -88,17 +92,15 @@
                 </div>
             </div>
             <div class="col-md-12">
-
             </div>
         </div>
     </section>
 
-
+</sec:authorize>
 
 <%-- Axios --%>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-
     const uploadResult = document.querySelector(".uploadResult")
     const cloneInput = document.querySelector(".uploadFile").cloneNode()
 
@@ -120,22 +122,22 @@
             }
 
             const fileSeq = fileObj.getAttribute("data-fileSeq")
-            // const uuid = fileObj.getAttribute("data-uuid")
-            // const img = fileObj.getAttribute("data-img")
-            // const savePath = fileObj.getAttribute("data-savepath")
-            // const fileName = fileObj.getAttribute("data-filename")
+            const uuid = fileObj.getAttribute("data-uuid")
+            const img = fileObj.getAttribute("data-img")
+            const savePath = fileObj.getAttribute("data-savepath")
+            const fileName = fileObj.getAttribute("data-filename")
 
             str += `<input type='hidden' name='fileSeq' value='\${fileSeq}'>`
-            // str += `<input type='hidden' name='uploads[\${i}].uuid' value='\${uuid}'>`
-            // str += `<input type='hidden' name='uploads[\${i}].img' value='\${img}'>`
-            // str += `<input type='hidden' name='uploads[\${i}].savePath' value='\${savePath}'>`
-            // str += `<input type='hidden' name='uploads[\${i}].fileName' value='\${fileName}'>`
+            str += `<input type='hidden' name='uploads[\${i}].uuid' value='\${uuid}'>`
+            str += `<input type='hidden' name='uploads[\${i}].img' value='\${img}'>`
+            str += `<input type='hidden' name='uploads[\${i}].savePath' value='\${savePath}'>`
+            str += `<input type='hidden' name='uploads[\${i}].fileName' value='\${fileName}'>`
         }//for
 
         const actionForm =  document.querySelector(".actionForm")
         document.querySelector(".hiddenClass").innerHTML += str
 
-       // actionForm.submit();
+       actionForm.submit();
     }, false)
 
 
@@ -154,6 +156,9 @@
 
 
     document.querySelector(".uploadBtn").addEventListener("click",(e)=> {
+
+        e.stopPropagation()
+        e.preventDefault()
 
         const formObj = new FormData();
         const fileInput = document.querySelector(".uploadFile")

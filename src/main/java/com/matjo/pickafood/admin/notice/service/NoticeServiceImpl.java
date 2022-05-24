@@ -55,6 +55,11 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     @Transactional
     public void register(NoticeDTO noticeDTO) {
+        log.info("-----------------------------------------------");
+        log.info("-----------------------------------------------");
+        log.info("-----------------------------------------------");
+        log.info("-----------------------------------------------");
+        log.info(noticeDTO);
 
         NoticeVO noticeVO = modelMapper.map(noticeDTO, NoticeVO.class);
         noticeMapper.insert(noticeVO);
@@ -71,6 +76,7 @@ public class NoticeServiceImpl implements NoticeService {
                 fileMapper.insertBoardFile(fileDTO);
             }
         }
+
     }
 
 }

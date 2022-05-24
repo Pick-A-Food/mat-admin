@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
 
@@ -62,16 +63,37 @@
             </div>
             <ul class="pageUL"></ul>
 
-            <form class="mb-4">
-                <div>
-                    <div style="display: flex">
-                        <textarea class="form-control" type="text" name="content" placeholder="댓글 작성 시 타인에 대한 배려와 책임을 담아주세요" style="width: 85vw; "></textarea>
-                        <button class="btn btn-default float-right addReplyBtn" href="#!" style="width: 10vw; margin-left: 10px; border-style: none">등록</button></div>
-                    <div><input type="hidden" name="nickname" value="아바라한잔"></div>
-                    <div><input type="hidden" name="id" value="aaa14"></div>
+<sec:authorize access="isAuthenticated()">
+    <sec:authentication property="principal.profile" var="profile" />
+    <sec:authentication property="principal.nickname" var="nickname" />
+    <sec:authentication property="principal.id" var="id" />
+
+        <div>
+            <div style="display: flex">
+                <textarea class="form-control" type="text" name="content" placeholder="댓글 작성 시 타인에 대한 배려와 책임을 담아주세요" style="width: 85vw; "></textarea>
+                <button class="addReplyBtn" href="#!" style="width: 10vw; margin-left: 10px; border-style: none">등록</button></div>
+            <div><input type="hidden" name="id" value="${id}"></div>
+            <div><input type="hidden" name="nickname" value="${nickname}"></div>
+            <div><input type="hidden" name="profile" value="${profile}"></div>
+            <div class="image-upload">
+                <i class="fas fa-solid fa-image"></i>
+                <input id="file-input" type="file" name="upload" onchange="readURL(this)" class="uploadFile" style="display: none;"/>
+                <img class="viewImage" style="display: inline-table"> 여기</img>
+            </div>
+
+            <div class="card-body" style="display: block;">
+                <div class="uploadInputDiv">
+                    <input type="file" name="upload" multiple class="uploadFile">
+                    <button class="btn bg-gradient-info float-right file-add uploadBtn">업로드</button>
                 </div>
-            </form>
-            <a class="badge bg-secondary text-decoration-none link-light removeReplyBtn" href="#!">삭제</a>
+            </div>
+            <div class="uploadResult">
+            </div>
+
+        </div>
+
+</sec:authorize>
+  <a class="badge bg-secondary text-decoration-none link-light removeReplyBtn" href="#!">삭제</a>
 
         </div>
     </div>
@@ -83,19 +105,9 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
 
-   /* 좋아요*/
-   const likeDiv = document.querySelector(".likeDiv")
-
-   likeDiv.addEventListener("click", (e) => {
-       targetSpan = e.target.closest("span")
-       console.log(targetSpan)
-       targetSpan.innerHTML = `<span class=likeCount; style="color:red"><i class="far fas fa-heart">&nbsp;${dto.likeCount}</i></span>`
-
-   });
 
 
-
-    <%-- 댓글 --%>
+    /* 댓글 */
     let initState = {
         boardSeq :${dto.boardSeq},
         replyArr : [],
@@ -109,58 +121,27 @@
     const pageUL = document.querySelector(".pageUL")
     const secondReplyDIV  = document.querySelector(".secondReplyDIV")
 
-    pageUL.addEventListener("click", (e) => {
-        if(e.target.tagName != 'LI'){
-            return
-        }
-        const dataNum = parseInt(e.target.getAttribute("data-num"))
-        replyService.setState({pageNum:dataNum})
-    }, false)
-
-
-
-
-   /* 댓글 등록 */
     document.querySelector(".addReplyBtn").addEventListener("click", (e) => {
+
+        e.preventDefault()
+        e.stopPropagation()
+
         const replyObj = {
             boardSeq:${dto.boardSeq},
             content: document.querySelector("textarea[name='content']").value,
             id:document.querySelector("input[name='id']").value,
-            nickname:document.querySelector("input[name='nickname']").value
+            nickname:document.querySelector("input[name='nickname']").value,
+            profile:document.querySelector("input[name='profile']").value
         }
+
+        console.log(replyObj)
 
         replyService.addServerReply(replyObj)
 
-    },false)
-
-    const modReplyContent = document.querySelector("input[name='modReplyContent']")
-    const modNicknameInput = document.querySelector("input[name='modNickname']")
-    const modNickId = document.querySelector("input[name='modId']")
-    const removeReplyBtn = document.querySelector(".removeReplyBtn")
-
-    let targetLi;
-
-    replyDIV.addEventListener("click", (e) => {
-        if(!e.target.getAttribute("data-replySeq")){
-            return;
-        }
-        targetLi = e.target.closest("li")
-        const replySeq = parseInt(e.target.getAttribute("data-replySeq"))
-
-        const replyObj = replyService.findReply(replySeq)
-        modReplyContent.value = replyObj.content
-        modNicknameInput.value = replyObj.nickname
-        modNickId.value = replyObj.id
-        removeReplyBtn.setAttribute("data-replySeq", replySeq)
+        document.querySelector("textarea[name='content']").value="";
 
     },false)
 
-    removeReplyBtn.addEventListener("click", (e) => {
-        const replySeq = parseInt(e.target.getAttribute("data-replySeq"))
-        replyService.removeServer(replySeq).then(result => {
-            targetLi.innerHTML = "삭제된 댓글입니다."
-        })
-    }, false)
 
 
     function render(obj){
@@ -171,31 +152,18 @@
             const arr = obj.replyArr
 
             replyDIV.innerHTML = arr.map(reply =>
-                 `<div class="d-flex replyRead" style="\${reply.root}; padding-bottom: 7px; padding-top:7px">
+                `<div class="d-flex replyRead" style="\${reply.root}; padding-bottom: 7px; padding-top:7px">
                 <div class="flex-shrink-0" style="display: table-cell">
                     <img class="rounded-circle" style="width: 50px; height: 50px; display: table-cell" src=\${reply.profile} alt="..." /></div>
                 <div class="ms-3 replyContent" style="margin-left: 10px">
                     <div class="fw-bold" style="font-weight: bolder">\${reply.nickname}</div>
-                    <div class="replyUL" style="padding-left:1px; display: table-cell">\${reply.content}</div>
+                    <div class="replyUL" style="padding-left:1px; display: table-cell">\${reply.content}\${reply.image}</div>
                     \${reply.buttonIcon}
                 </div>
                 <ul class="regDate" style="position:absolute; right: 5%;font-size: 13px">\${reply.dateStr}
                     <i class="fas fa-solid fa-bars modBtn" data-replySeq=\${reply.replySeq} style="margin-left: 10px"></i></ul><br><br>
-            </div>`).join(" ")
-
-            /* 대댓 */
-            document.querySelector(".secondReply").addEventListener("click", (e) => {
-                secondReplyDIV.innerHTML = `
-            <form class="mb-4">
-                <div>
-                    <div style="display: flex">
-                        <textarea class="form-control" type="text" name="content" placeholder="댓글 작성 시 타인에 대한 배려와 책임을 담아주세요" style="width: 85vw; "></textarea>
-                        <button class="btn btn-default float-right addReplyBtn" href="#!" style="width: 10vw; margin-left: 10px; border-style: none">등록</button></div>
-                    <div><input type="hidden" name="nickname" value="아바라한잔"></div>
-                    <div><input type="hidden" name="id" value="aaa14"></div>
-                </div>
-            </form>`
-            })
+            </div>
+        `).join(" ")
 
 
         }
@@ -241,9 +209,6 @@
     }
 
 
-
-    /* ---Aios 통신 부분-----------------------------------------------------------------*/
-
     const replyService = (function (initState, callbackFn){
         let state = initState
         const callback = callbackFn
@@ -288,11 +253,19 @@
 
 
         async function addServerReply(replyObj){
-            const res = await axios.post(`/replies/`, replyObj)
-            const data = res.data
-            //console.log("addReplyResult:",data)
+            // console.log('async')
+            // console.log(replyObj)
+            try {
+                const res = await axios.post(`/replies/`, replyObj)
+                const data = res.data
+                console.log("addReplyResult:", data)
 
-            setState({replyCount: data.result})
+                setState({replyCount: data.result})
+            }catch(error) {
+
+                //console.log("--------------------------")
+                //console.log(error.response.data)
+            }
         }
 
         function findReply(replySeq){
@@ -306,7 +279,6 @@
             const result = res.data.result
             return result
         }
-
         return {setState, addServerReply, findReply ,removeServer}
 
     })(initState, render)

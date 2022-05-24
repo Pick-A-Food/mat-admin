@@ -43,11 +43,11 @@ public class NoticeController {
         model.addAttribute("dtoList", responseDTO.getDtoList());
         model.addAttribute("total", responseDTO.getTotal());
 
-        log.info("----------------------------------------------------");
-        log.info("----------------------------------------------------");
-        log.info(responseDTO.getDtoList());
-        log.info("----------------------------------------------------");
-        log.info("----------------------------------------------------");
+        // log.info("----------------------------------------------------");
+        // log.info("----------------------------------------------------");
+        // log.info(responseDTO.getDtoList());
+        // log.info("----------------------------------------------------");
+        // log.info("----------------------------------------------------");
 
         int total = responseDTO.getTotal();
         model.addAttribute("pageMaker", new PageMaker(listDTO.getPage(), total));
@@ -63,10 +63,10 @@ public class NoticeController {
     //등록 완료
     @PostMapping("/register")
     public String registerPOST(NoticeDTO noticeDTO, RedirectAttributes rttr){
-        //log.info("등록 시....post................");
-        //log.info(noticeDTO);
+        // log.info("등록 시....post................");
+        // log.info(noticeDTO);
 
-        //log.info("noticeDTO :  {} ", noticeDTO);
+        log.info("noticeDTO :  {} ", noticeDTO);
 
         noticeService.register(noticeDTO);
         rttr.addFlashAttribute("result", 123);
