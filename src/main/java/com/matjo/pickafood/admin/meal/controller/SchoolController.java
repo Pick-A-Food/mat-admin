@@ -26,7 +26,7 @@ public class SchoolController {
 
   }
 
-  @GetMapping(value = "/list")
+  @GetMapping(value = "/list/all")
   public @ResponseBody List<SchoolDTO> listAll() {
     return schoolService.selectAll();
   }
@@ -34,6 +34,8 @@ public class SchoolController {
   @GetMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
   public @ResponseBody List<SchoolDTO> listOfRegion(String regionCode, String schoolName) {
 //    return schoolService.selectSchoolsOfRegion(regionCode);
+    log.info(regionCode);
+    log.info(schoolName);
     return schoolService.selectSchoolsByRegionAndName(regionCode, schoolName);
   }
 

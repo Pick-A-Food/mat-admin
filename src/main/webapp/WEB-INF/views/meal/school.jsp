@@ -153,12 +153,24 @@
         `<form class="searchMealsForm">
             <input type="hidden" name="regionCode" value="\${school.regionCode}">
             <input type="hidden" name="schoolCode" value="\${school.schoolCode}">
-            <input readonly value="\${school.schoolName}" class="form-control">
-            <input type="date" name="startDate" class="form-control">
-            <input type="date" name="endDate" class="form-control">
-            <button class="btn btn-primary searchMealsBtn">
-              <i class="fas fa-search fa-sm"></i>식단 검색하기
-            </button>
+            <div class="container">
+            <div class='row'>
+              <div class='col-sm-3'>
+                  <input readonly value="\${school.schoolName}" class="form-control">
+              </div>
+              <div class='col-sm-3'>
+                  <input type="date" name="startDate" class="form-control">
+              </div>  ~
+              <div class='col-sm-3'>
+                  <input type="date" name="endDate" class="form-control">
+              </div>
+              <div class='col-sm-3 row'>
+                <button class="btn btn-primary searchMealsBtn">
+                  <i class="fas fa-search fa-sm"></i>식단 검색하기
+                </button>
+              </div>
+            </div>
+            </div>
         </form>`
   });
 

@@ -9,12 +9,12 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6" style="margin-top: 1vw">
-        <h1 class="m-0">급식 관리</h1>
+        <h1 class="m-0">학교 선택</h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="/">Home</a></li>
-          <li class="breadcrumb-item active">급식 관리</li>
+          <li class="breadcrumb-item active">학교 선택</li>
         </ol>
       </div>
     </div>
@@ -86,10 +86,16 @@
 
         </div>
 
+
       </div>
     </div>
   </div>
 </div>
+
+<form class="member">
+  <input type="hidden" value="42" name="member_seq">
+  <input type="hidden" value="7061058" name="school_code">
+</form>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="/resources/js/meal/school.js"></script>
@@ -102,40 +108,29 @@
     const regionCode = searchSchoolForm.querySelector("select").value;
     const schoolName = searchSchoolForm.querySelector("input[name='schoolCode']").value;
 
-    axios.get(`/school/list?regionCode=${regionCode}&schoolName=${schoolName}`)
+    console.log(`/school/list?regionCode=\${regionCode}&schoolName=\${schoolName}`);
+    axios.get(`/school/list?regionCode=\${regionCode}&schoolName=\${schoolName}`)
         .then(res => {
           const result = res.data;
-
+          let str = "";
+          result.forEach(school => {
+            str +=
+                `<tr data-school-code="\${school.schoolCode}"
+                    data-region-code="\${school.regionCode}"
+                    data-school-name="\${school.schoolName}"
+                    data-school-address="\${school.address}">
+                    <td>\${school.schoolCode}</td>
+                    <td>\${school.schoolName}</td>
+                    <td>\${school.address}</td>
+                    <td><button class="selectSchoolBtn btn btn-success">선택</button></td>
+                </tr>`;
+          });
+          document.querySelector(".schoolTableBody").innerHTML = str;
         });
-
-    // axios.get(requestURL).then(res => {
-    //   const result = res.data;
-    //   console.log(result);
-    //   if (result["RESULT"] != null) {
-    //     console.log("해당하는 데이터가 없습니다.");
-    //     return;
-    //   }
-    //
-    //   const count = result["schoolInfo"][0]["head"][0]["list_total_count"];
-    //   const resultArr = result.schoolInfo[1]["row"];
-    //   let str = "";
-    //   for (school of resultArr) {
-    //     str +=
-    //         `<tr data-school-code="\${school.SD_SCHUL_CODE}"
-    //             data-region-code="\${school.ATPT_OFCDC_SC_CODE}"
-    //             data-school-name="\${school.SCHUL_NM}"
-    //             data-school-address="\${school.ORG_RDNMA}">
-    //             <td>\${school.SCHUL_NM}</td>
-    //             <td>\${school.ORG_RDNMA}</td>
-    //         </tr>`
-    //     console.log(school);
-    //   }
-    //   document.querySelector(".schoolTableBody").innerHTML = str;
-    // });
   }, false);
 
   document.querySelector(".schoolTableBody").addEventListener("click", (e) => {
-    if (e.target.tagName != 'TD') {
+    if (e.target.tagName != 'BUTTON') {
       return;
     }
     const target = e.target.closest("tr");
@@ -149,13 +144,25 @@
         `<form class="searchMealsForm">
             <input type="hidden" name="regionCode" value="\${school.regionCode}">
             <input type="hidden" name="schoolCode" value="\${school.schoolCode}">
-            <input readonly value="\${school.schoolName}" class="form-control">
-            <input type="date" name="startDate" class="form-control">
-            <input type="date" name="endDate" class="form-control">
-            <button class="btn btn-primary searchMealsBtn">
-              <i class="fas fa-search fa-sm"></i>식단 검색하기
-            </button>
-        </form>`
+            <div class="container">
+            <div class='row'>
+              <div class='col-sm-3'>
+                  <input readonly value="\${school.schoolName}" class="form-control">
+              </div>
+              <div class='col-sm-3'>
+                  <input type="date" name="startDate" class="form-control">
+              </div>  ~
+              <div class='col-sm-3'>
+                  <input type="date" name="endDate" class="form-control">
+              </div>
+              <div class='col-sm-3 row'>
+                <button class="btn btn-primary searchMealsBtn">
+                  <i class="fas fa-search fa-sm"></i>식단 검색하기
+                </button>
+              </div>
+            </div>
+            </div>
+        </form>`;
   });
 
   const searchMealsFormContainer = document.querySelector(".searchMealsFormContainer");
