@@ -46,8 +46,7 @@ public class BoardController {
     @PostMapping("/register")
     public String registerPOST (BoardDTO boardDTO, RedirectAttributes rttr){
 
-        log.info("register..." + boardDTO);
-
+        log.info("register...." + boardDTO);
         boardService.register(boardDTO);
 
         rttr.addFlashAttribute("result", boardDTO.getBoardSeq());
